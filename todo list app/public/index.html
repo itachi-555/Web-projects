@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="mainContainer">
+      <h1>Todo List</h1>
+
+      <!-- Form to add a new todo -->
+      <form id="addTodoForm">
+        <input
+          type="text"
+          id="todoLabel"
+          placeholder="Enter todo label"
+          required
+        />
+        <button type="submit">Add Todo</button>
+      </form>
+
+      <!-- Container to display todos -->
+      <div id="todoContainer"></div>
+
+      <!-- Button container for check/uncheck all and delete all -->
+      <div class="button-container">
+        <!-- Button to check all todos -->
+        <button id="checkAll">Check All</button>
+
+        <!-- Button to uncheck all todos -->
+        <button id="uncheckAll">Uncheck All</button>
+
+        <!-- Button to delete all todos -->
+        <button id="deleteAll">Delete All</button>
+
+        <!-- Button to delete completed todos -->
+        <button id="deleteCompleted">Delete Completed</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

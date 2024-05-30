@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple website</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section id="sec1">
+      <div class="topBar">
+        <ul class="list">
+          <li><a href="">About us</a></li>
+          <li><a href="">Services</a></li>
+          <li><a href="">Contact</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>HTML Website Template</h1>
+        <button>LEARN HOW</button>
+      </div>
+    </section>
+    <section id="sec2">
+      <div class="additional">
+        <div class="title">
+          <h2>Addional Services</h2>
+          Lorem ipsum dolor sit amet.
+        </div>
+        <div class="services">
+          <ul class="list_services">
+            <li>
+              <h2>HEALTH CARE</h2>
+              <h4>Lorem, ipsum.</h4>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
+              ipsa, ex atque culpa nam eius similique officia ut tempore dolor
+              molestiae inventore. Sunt voluptatum quae vel minima accusamus
+              iure suscipit.
+              <button>READ MORE</button>
+            </li>
+            <li>
+              <h2>FOOD & DRINK</h2>
+              <h4>Lorem, ipsum.</h4>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
+              ipsa, ex atque culpa nam eius similique officia ut tempore dolor
+              molestiae inventore. Sunt voluptatum quae vel minima accusamus
+              iure suscipit.
+              <button>READ MORE</button>
+            </li>
+            <li>
+              <h2>AQUA FIT</h2>
+              <h4>Lorem, ipsum.</h4>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
+              ipsa, ex atque culpa nam eius similique officia ut tempore dolor
+              molestiae inventore. Sunt voluptatum quae vel minima accusamus
+              iure suscipit.
+              <button>READ MORE</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowDown") {
+          document
+            .getElementById("sec2")
+            .scrollIntoView({ behavior: "smooth" });
+        } else if (event.key === "ArrowUp") {
+          document
+            .getElementById("sec1")
+            .scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    </script>
+  </body>
+</html>

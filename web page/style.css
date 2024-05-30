@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  background-color: black;
+  height: 10vh;
+}
+.list {
+  list-style-type: none;
+  display: flex;
+}
+.list li {
+  margin-right: 30px;
+}
+a {
+  font-size: x-large;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  color: white;
+}
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-image: url("assets/704387.png");
+  background-size: cover; /* Adjust background size as needed */
+  background-position: center; /* Adjust background position as needed */
+  width: 100%; /* Take all available horizontal space */
+  height: 90vh; /* Take all vertical space of the viewport */
+}
+.content h1 {
+  color: white;
+  font-size: 70px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.content button {
+  background-color: rgba(255, 68, 0, 0.74);
+  border: none;
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  padding: 15px;
+  cursor: pointer;
+}
+.additional {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("assets/1358899.png");
+  background-size: cover; /* Adjust background size as needed */
+  background-position: center; /* Adjust background position as needed */
+  width: 97%;
+  height: 100vh;
+}
+.list_services {
+  list-style-type: none;
+  display: flex;
+}
+.list_services li {
+  margin-right: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.title h2{
+    font-size: 40px;
+    
+}
+.list_services li button{
+    margin-top: 30px;
+    width: 200px;
+    background: none;
+    color: rgb(245, 99, 32);
+    border: none;
+    border: 2px solid;
+    border-color: rgb(245, 99, 32);
+    font-size: large;
+    padding: 10px;
+    cursor: pointer;
+}
