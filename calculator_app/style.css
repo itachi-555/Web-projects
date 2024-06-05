@@ -1,0 +1,111 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #121212; /* Dark background for better contrast */
+}
+
+.container {
+  background-color: black;
+  border-radius: 10px;
+  padding: 15px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90vw; /* Use viewport width for responsiveness */
+  max-width: 400px; /* Maximum width for larger screens */
+  height: 90vh; /* Use viewport height for responsiveness */
+  max-height: 700px; /* Maximum height for larger screens */
+}
+
+.expression {
+  padding: 15px;
+  height: 20vh;
+  width: 100%;
+  color: white;
+}
+
+.expression h2 {
+  padding: 0;
+  margin: 0;
+  font-weight: normal;
+  font-size: 6vw; /* Use viewport width for font size */
+  overflow-y: scroll; /* Add scrollbar for vertical overflow */
+  width: 100%;
+  text-align: right;
+  word-wrap: break-word; /* or use 'normal' */
+  max-height: 75%; /* Set max height for two lines of text */
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  height: 75vh; /* Adjust height to fit within container */
+  width: 100%;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.buttons-row {
+  display: flex;
+  justify-content: space-around; /* Ensure buttons are spaced evenly */
+  width: 100%;
+}
+
+button {
+  width: 22vw; /* Use viewport width for button size */
+  height: 22vw; /* Keep buttons square */
+  border-radius: 50%;
+  border: none;
+  margin: 5px;
+  font-size: 5vw; /* Use viewport width for font size */
+  box-sizing: border-box; /* Include padding in size calculation */
+}
+
+.numbers {
+  background-color: #333333;
+  color: white;
+}
+
+.top-buttons {
+  background-color: #a6a6a6;
+}
+
+.side-buttons {
+  background-color: #ff9501;
+  color: white;
+}
+
+.zero {
+  background-color: #333333;
+  color: white;
+  width: 48vw;
+  height: 22vw;
+  border-radius: 50px;
+}
+
+@media (min-width: 500px) {
+  button {
+    width: 75px;
+    height: 75px;
+    font-size: x-large;
+  }
+
+  .zero {
+    height: 75px;
+    width: auto;
+    flex-grow: 1;
+  }
+
+  .expression h2 {
+    font-size: 50px;
+  }
+  .buttons-container {
+    padding: 0 30px;
+  }
+  .buttons-row {
+    width: auto;
+  }
+}

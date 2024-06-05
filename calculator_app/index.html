@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="expression"><h2 id="expression"></h2></div>
+    <div class="buttons-container">
+      <div class="buttons-row">
+        <button onclick="AC()" class="top-buttons">AC</button>
+        <button onclick="Delete()" class="top-buttons">DEL</button>
+        <button onclick="add('%')" class="top-buttons">%</button>
+        <button onclick="add('/')" class="side-buttons">/</button>
+      </div>
+      <div class="buttons-row">
+        <button onclick="add('7')" class="numbers">7</button>
+        <button onclick="add('8')" class="numbers">8</button>
+        <button onclick="add('9')" class="numbers">9</button>
+        <button onclick="add('*')" class="side-buttons">*</button>
+      </div>
+      <div class="buttons-row">
+        <button onclick="add('4')" class="numbers">4</button>
+        <button onclick="add('5')" class="numbers">5</button>
+        <button onclick="add('6')" class="numbers">6</button>
+        <button onclick="add('-')" class="side-buttons">-</button>
+      </div>
+      <div class="buttons-row">
+        <button onclick="add('1')" class="numbers">1</button>
+        <button onclick="add('2')" class="numbers">2</button>
+        <button onclick="add('3')" class="numbers">3</button>
+        <button onclick="add('+')" class="side-buttons">+</button>
+      </div>
+      <div class="buttons-row">
+        <button onclick="add('0')" class="zero">0</button>
+        <button onclick="add('.')" class="numbers">.</button>
+        <button onclick="result()" class="side-buttons">=</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
