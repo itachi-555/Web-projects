@@ -1,19 +1,12 @@
-var style = [
-    "border-bottom: 2px solid black;  border-right: 2px solid black;",
-    "border-bottom: 2px solid black;  border-right: 2px solid black;border-left:2px solid black;",
-    "border-left:2px solid black;border-bottom:2px solid black;",
-    "border-bottom: 2px solid black;border-top:2px solid black;border-right:2px solid black;",
-    "border:2px solid black;",
-    "border-bottom: 2px solid black;border-top:2px solid black;border-left:2px solid black;",
-    "border-right:2px solid black;border-top:2px solid black",
-    "border-top: 2px solid black;  border-right: 2px solid black;border-left:2px solid black;",
-    "border-left:2px solid black;border-top:2px solid black;",
-];
 var counter = 0;
 let player1Score = document.getElementById('player1');
 let player2Score = document.getElementById('player2');
 let container = document.getElementById('container');
+let gameOver = document.getElementById('gameOver');
+let message = document.getElementById('message');
+let score = document.getElementById('score');
 let player, xCounter, oCounter, rounds;
+let Game;
 function drawBoard() {
     for (let index = 0; index < 3; index++) {
         container.innerHTML += `<div class = row id = row${index}></div>`;
@@ -23,18 +16,21 @@ function drawBoard() {
             counter++;
         }
     }
-    for (let index = 0; index < 9; index++) {
-        var button = document.getElementById(`${index}`);
-        button.style = style[index];
-    }
 }
 function init() {
     player = 'X';
     xCounter = [0, 0, 0, 0, 0, 0, 0, 0];
     oCounter = [0, 0, 0, 0, 0, 0, 0, 0];
     rounds = 0;
+    Game = true;
+    for (let index = 0; index < 9; index++) {
+        document.getElementById(`${index}`).innerText = '';
+    }
 }
 function add(param) {
+    if (!Game) {
+        return;
+    }
     var clicked = document.getElementById(param);
     if (clicked.textContent == 'X' || clicked.textContent == 'O') {
         return;
@@ -42,12 +38,12 @@ function add(param) {
     clicked.innerText = player;
     if (player == 'X') {
         editCounter(param, xCounter);
-        clicked.style.color = 'green';
+        clicked.style.color = '#f67333';
         player = 'O';
     }
     else if (player == 'O') {
         editCounter(param, oCounter);
-        clicked.style.color = 'red';
+        clicked.style.color = '#bad856';
         player = 'X';
     }
     checkWinner();
@@ -99,47 +95,43 @@ function editCounter(index, arr) {
             break;
     }
 }
-function showPopup(param) {
-    document.getElementById("popup").style.display = "flex";
-    document.getElementById("message").innerText += `${param}`;
-    document.getElementById('modal-overlay').style.display = 'block';
-}
-
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
-    document.getElementById('modal-overlay').style.display = 'none';
-}
 function checkWinner() {
     for (let index = 0; index < 8; index++) {
         if (xCounter[index] == 3) {
-            showPopup('player X won');
+            popupe('player X won');
             updateScore(player1Score);
+            Game = false;
             return;
         }
     }
     for (let index = 0; index < 8; index++) {
         if (oCounter[index] == 3) {
-            showPopup('player O won');
+            popupe('player O won');
             updateScore(player2Score);
+            Game = false;
             return;
         }
     }
     if (rounds == 8) {
-        showPopup('its adraw');
+        popupe('its a Draw');
+        Game = false;
     }
 }
 function updateScore(param) {
     param.innerText++;
 }
+function popupe(param) {
+    gameOver.style.display = 'flex';
+    message.innerText = param;
+    score.style.display = 'none';
+}
 function playAgain() {
-    for (let index = 0; index < 9; index++) {
-        document.getElementById(`${index}`).innerText = '';
-    }
-    document.getElementById('message').innerText = '';
-    closePopup();
+    gameOver.style.display = 'none';
+    message.innerText = '';
+    score.style.display = 'flex';
     init();
 }
-function reset() {
+function resetScore() {
     playAgain();
     player1Score.innerText = 0;
     player2Score.innerText = 0;

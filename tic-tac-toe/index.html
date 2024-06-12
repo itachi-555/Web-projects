@@ -9,22 +9,17 @@
   <body>
     <h1 class="title">Tic-Tac-Toe</h1>
     <div id="container" class="container"></div>
-    <div id="modal-overlay" class="modal-overlay"></div>
-    <div id="popup" class="popup">
-      <div class="popup-content" id="popup-content">
-        <span class="close" onclick="closePopup()">&times;</span>
-        <p>Game Over</p>
-        <br />
-        <p id="message"></p>
-        <div class="buttons">
-          <button onclick="playAgain()">Play again</button>
-          <button onclick="reset()">reset</button>
-        </div>
+    <div class="gameOver" id="gameOver">
+      <h3>Game Over</h3>
+      <h5 class="message" id="message"></h5>
+      <div class="options">
+        <button onclick="playAgain()">Play again</button>
+        <button onclick="resetScore()">reset score</button>
       </div>
     </div>
-    <div class="score">
-      <p>player 1:<p id="player1">0</p></p>
-      <p>player 2:<p id="player2">0</p></p>
+    <div class="score" id="score">
+      <div class="player1"><p>player 1 score:</p><p id="player1">0</p></div>
+      <div class="player2"><p>player 2 score:</p><p id="player2">0</p></div>
     </div>
     <script src="script.js"></script>
   </body>
