@@ -4,7 +4,7 @@ let player2Score = document.getElementById('player2');
 let container = document.getElementById('container');
 let gameOver = document.getElementById('gameOver');
 let message = document.getElementById('message');
-let score = document.getElementById('score');
+let score = document.getElementById('foot-content');
 let player, xCounter, oCounter, rounds;
 let Game;
 function drawBoard() {
