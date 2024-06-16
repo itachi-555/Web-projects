@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat-app</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="side-bar">
+      <div class="menu"></div>
+      <div class="contacts">
+        <div class="search-container">
+          <img src="./assets/search-interface-symbol.png" />
+          <input type="search" name="search" id="search" placeholder="Search" />
+        </div>
+        <div class="users" id="users"></div>
+      </div>
+    </div>
+    <div class="chat-container">
+      <div class="contact-bar">
+        <div class="left-side">
+          <img src="./assets/user.png" id="contact-img" />
+          <p id="contact-name">User Name</p>
+        </div>
+        <div class="right-side">
+          <img src="./assets/cam-recorder.png" />
+          <img src="./assets/search-interface-symbol.png" />
+          <img src="./assets/menu.png" />
+        </div>
+      </div>
+      <div class="chat" id="chat"></div>
+      <div class="message">
+        <input
+          type="text"
+          name="message"
+          id="message"
+          placeholder="Message..."
+        />
+        <button id="send">Send</button>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
