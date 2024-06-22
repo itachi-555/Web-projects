@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body {
   padding: 5px;
   margin: 0;
@@ -17,6 +20,8 @@ body {
   background-color: #6786ff;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
+  display: flex;
+  overflow: hidden;
 }
 .contacts {
   height: 100%;
@@ -117,6 +122,7 @@ img {
   background-color: #1c1f2c;
   padding: 10px 15px;
   border-radius: 10px;
+  width: 80%;
 }
 .search-container input {
   border: none;
@@ -133,7 +139,7 @@ img {
   flex-direction: column;
   width: 100%;
 }
-.user-item{
+.user-item {
   margin-top: 20px;
   background-color: #303347;
   width: 100%;
@@ -144,4 +150,16 @@ img {
   align-items: center;
   padding: 10px;
   cursor: pointer;
+}
+.indicator {
+  margin-left: auto;
+  transform: translateX(60%) translateY(200%);
+  height: fit-content;
+}
+.shape-box {
+  background-color: #262837;
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  transform: rotateZ(45deg);
 }

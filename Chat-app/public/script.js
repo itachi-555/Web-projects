@@ -25,7 +25,9 @@ socket.on('userList', (users) => {
     }
   }
 });
-
+function ScrollToButtom(container) {
+  container.scrollTop = container.scrollHeight;
+}
 socket.on('privateMessage', (data) => {
   if (selectedUserId) {
     const { message, from } = data;
@@ -34,6 +36,7 @@ socket.on('privateMessage', (data) => {
     messageItem.className = 'contact-message';
     messageItem.textContent = `${from}: ${message}`;
     messages.appendChild(messageItem);
+    ScrollToButtom(messages);
   }
 });
 
@@ -43,20 +46,20 @@ document.getElementById('send').onclick = () => {
   if (!message || message === '') {
     return;
   }
+  const messages = document.getElementById('chat');
   if (selectedUserId) {
     socket.emit('privateMessage', { receiverId: selectedUserId, message });
-    const messages = document.getElementById('chat');
     const messageItem = document.createElement('div');
     messageItem.className = 'user-message';
     messageItem.textContent = `You: ${message}`;
     messages.appendChild(messageItem);
   } else {
-    const messages = document.getElementById('chat');
     const messageItem = document.createElement('div');
     messageItem.className = 'user-message';
     messageItem.textContent = `You: ${message}`;
     messages.appendChild(messageItem);
   }
+  ScrollToButtom(messages);
   messageInput.value = '';
 };
 document.addEventListener('keydown', function (event) {
