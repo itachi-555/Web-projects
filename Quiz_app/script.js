@@ -32,6 +32,13 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => console.error('Error fetching categories:', error));
     }
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 
     function fetchQuize() {
         // Check if types.options[types.selectedIndex] is defined
@@ -43,8 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     Quizes = []; // Clear Quizes array before fetching new data
                     data.results.forEach((question, index) => {
                         let answers = [...question.incorrect_answers, question.correct_answer]; // Combine incorrect and correct answers
-                        answers.sort(() => Math.random() - 0.5); // Shuffle answers randomly
-
+                        answers = shuffle(answers);
                         let Quiz = {
                             Question: question.question,
                             Answers: answers,
@@ -96,7 +102,12 @@ document.addEventListener('DOMContentLoaded', function () {
             displayQuiz();
         }
     }
-
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            nextButton.click();
+            console.log('button is disabled');
+        }
+    });
     function checkAnswer(button) {
         let selectedAnswer = button.textContent;
         let correctAnswer = Quizes[counter].correctAnswer;
