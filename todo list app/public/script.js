@@ -1,142 +1,235 @@
-// Function to fetch and display todos
-async function fetchTodos() {
-    try {
-        const response = await fetch("/todos");
-        if (!response.ok) {
-            throw new Error("Failed to fetch todos");
-        }
-        const todos = await response.json();
-        console.log("Todos:", todos); // Log todos for debugging
-        const todoContainer = document.getElementById("todoContainer");
-        todoContainer.innerHTML = "";
-        todos.forEach((todo) => {
-            const todoDiv = document.createElement("div");
-            todoDiv.innerHTML = `
-            <div class="todo">
-              <div>
-                <input type="checkbox" id="state_${todo._id}" ${todo.state ? "checked" : ""
-                }>
-              <p>${todo.label}</p>
-                </div>
-            <button onclick="deleteTodo('${todo._id}')">Delete</button>
-            </div>
-            `;
-            todoContainer.appendChild(todoDiv);
-
-            // Add event listener to update todo state when checkbox is clicked
-            const stateCheckbox = document.getElementById(`state_${todo._id}`);
-            stateCheckbox.addEventListener("change", async () => {
-                await updateTodoState(todo._id, stateCheckbox.checked);
+const todoInputText = document.getElementById('todo-input-text');
+const todoInputStatus = document.getElementById('todo-input-status');
+const todos = document.getElementById('todos');
+const AllButton = document.getElementById('All');
+const ActiveButton = document.getElementById('Active');
+const CompletedButton = document.getElementById('Completed');
+let items = 0;
+import { currentTheme, changeTheme } from './themes.js';
+console.log(currentTheme);
+//API functions
+function fetchTodos() {
+    fetch('/todos')
+        .then(response => {
+            // Handle HTTP response
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse JSON data from the response
+        })
+        .then(data => {
+            // Handle parsed data
+            data.forEach((todo, index) => {
+                addTodo(todo.label, todo.state, todo._id);
             });
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('There was a problem with the fetch operation:', error);
         });
+}
+async function postTodo(text, status) {
+    const data = {
+        label: text,
+        state: status
+    };
+
+    try {
+        const response = await fetch('/todos', {
+            method: 'POST', // HTTP method
+            headers: {
+                'Content-Type': 'application/json', // Specify content type
+                // Add any headers you need here
+            },
+            body: JSON.stringify(data), // Convert JS object to JSON string
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const responseData = await response.json(); // Parse JSON data from the response
+        console.log('Success:', responseData.message);
+        return responseData.id; // Return the ID from the response
     } catch (error) {
-        console.error("Error fetching todos:", error);
-        // Handle error (e.g., display error message to user)
+        console.error('Error:', error);
+        throw error; // Propagate the error further if needed
     }
 }
-
-// Function to add a new todo
-async function addTodo() {
-    const label = document.getElementById("todoLabel").value;
-    if (label.trim() !== "") {
-        await fetch("/todos", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ label }),
+async function deleteFromServer(id) {
+    fetch(`/todos/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // or .text() or .blob() etc. based on response type
+        })
+        .then(data => {
+            console.log('Delete request successful:', data);
+        })
+        .catch(error => {
+            console.error('Error deleting:', error);
         });
-        document.getElementById("todoLabel").value = "";
-        fetchTodos();
-    } else {
-        alert("Todo label cannot be empty");
+}
+async function updateFromServer(id) {
+    try {
+        const response = await fetch(`/todos/${id}/state`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const responseData = await response.json(); // Parse JSON data from the response
+        return responseData.state;
+
+    } catch (error) {
+        console.error('Error:', error);
+        throw error; // Propagate the error further if needed
+    }
+
+}
+//js functions
+function updateItems() {
+    const itemsLeft = document.getElementById('items');
+    itemsLeft.innerText = `${items} items left`;
+}
+function updateTodStyle(id) {
+
+}
+// Function to add a new todo element
+async function addTodo(text, checkBoxValue, index) {
+    try {
+        let className;
+        if (!checkBoxValue) {
+            items++;
+            updateItems();
+            className = 'uncompleted';
+        } else {
+            className = 'completed';
+        }
+        const todo = document.createElement('div');
+        todo.className = 'todo';
+        todo.id = `${index}`;
+        todo.innerHTML = `<div class="left">
+        <input type="checkbox" class="circle" id="checkbox${index}" onclick="updateState('${index}')"/>
+        <p class = "${className}" id="text${index}">${text}</p>
+        </div>
+        <button class="cross" id="cross${index}" onclick="deleteTodo('${index}')"></button>`;
+        const checkbox = todo.querySelector(`#checkbox${index}`);
+        checkbox.checked = checkBoxValue;
+        todos.appendChild(todo); // Assuming todos is the parent element where todos are appended
+
+    } catch (error) {
+        console.error('Error adding todo:', error);
     }
 }
+async function updateState(id) {
+    const newState = await updateFromServer(id);
+    const text = document.getElementById(`text${id}`);
+    if (newState) {
+        items--;
+        text.className = 'completed';
+    }
+    else {
+        items++;
+        text.className = 'uncompleted';
+    }
+    updateItems();
+}
+async function deleteTodo(id) {
+    const response = await fetch(`/todos/${id}`); // Fetch updated todo data
+    if (!response.ok) {
+        throw new Error('Failed to fetch updated todo');
+    }
+    const element = await response.json();
+    if (!element.state) {
+        items--;
+        updateItems();
+    }
+    await deleteFromServer(id);
+    var todo = document.getElementById(id);
+    if (todo) {
+        todo.remove();
+    } else {
+        console.error('Element not found.');
+    }
 
-// Function to delete a todo
-async function deleteTodo(todoId) {
-    await fetch(`/todos/${todoId}`, { method: "DELETE" });
-    fetchTodos();
 }
 
-// Function to update todo state
-async function updateTodoState(todoId, state) {
-    await fetch(`/todos/${todoId}/state`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ state }),
+document.getElementById('Clear-completed').addEventListener('click', function () {
+    const elements = todos.children;
+    const childrenArray = Array.from(elements);
+    childrenArray.forEach(child => {
+        const checkbox = child.querySelector('input');
+        if (checkbox.checked) {
+            deleteTodo(child.id);
+        }
+    })
+})
+AllButton.addEventListener('click', function () {
+    const elements = todos.children;
+    const childrenArray = Array.from(elements);
+    childrenArray.forEach(child => {
+        child.style.display = 'flex';
     });
-    fetchTodos();
-}
+    AllButton.className = 'active';
+    ActiveButton.className = 'unactive';
+    CompletedButton.className = 'unactive';
+    changeTheme(currentTheme);
+});
 
-// Function to check all todos
-async function checkAll() {
-    await fetch("/todos/mark-all-complete", { method: "PATCH" });
-    fetchTodos();
-}
-
-// Function to uncheck all todos
-async function uncheckAll() {
-    const response = await fetch("/todos");
-    const todos = await response.json();
-    todos.forEach(async (todo) => {
-        const stateCheckbox = document.getElementById(`state_${todo._id}`);
-        if (stateCheckbox.checked) {
-            await updateTodoState(todo._id, false);
+ActiveButton.addEventListener('click', function () {
+    const elements = todos.children;
+    const childrenArray = Array.from(elements);
+    childrenArray.forEach(child => {
+        const checkbox = child.querySelector('input');
+        if (checkbox.checked) {
+            child.style.display = 'none';
+        } else {
+            child.style.display = 'flex';
         }
     });
-    fetchTodos();
-}
-async function deleteAll() {
-    const response = await fetch("/todos");
-    const todos = await response.json();
+    ActiveButton.className = 'active';
+    AllButton.className = 'unactive';
+    CompletedButton.className = 'unactive';
+    changeTheme(currentTheme);
+});
 
-    todos.forEach((todo) => {
-        deleteTodo(todo._id);
-    });
-    fetchTodos();
-}
-//delete completed
-async function deleteCompleted() {
-    const response = await fetch("/todos");
-    const todos = await response.json();
-
-    todos.forEach((todo) => {
-        if (todo.state) {
-            deleteTodo(todo._id);
+CompletedButton.addEventListener('click', function () {
+    const elements = todos.children;
+    const childrenArray = Array.from(elements);
+    childrenArray.forEach(child => {
+        const checkbox = child.querySelector('input');
+        if (!checkbox.checked) {
+            child.style.display = 'none';
+        } else {
+            child.style.display = 'flex';
         }
     });
-    fetchTodos();
-}
-// Fetch todos when the page loads
+    CompletedButton.className = 'active';
+    AllButton.className = 'unactive';
+    ActiveButton.className = 'unactive';
+    changeTheme(currentTheme);
+});
+
+
+// Event listener for "Enter" key press
+document.addEventListener('keydown', async function (event) {
+    if (event.key === 'Enter') { // Check if the "Enter" key was pressed
+        const todoText = todoInputText.value;
+        const todoStatus = todoInputStatus.checked;
+        const index = await postTodo(todoText, todoStatus);
+        await addTodo(todoText, todoStatus, index); // Add new todo asynchronousl
+        todoInputText.value = '';
+    }
+    changeTheme(currentTheme);
+});
 fetchTodos();
-
-// Add event listener to form submission for adding a todo
-document
-    .getElementById("addTodoForm")
-    .addEventListener("submit", async (event) => {
-        event.preventDefault();
-        addTodo();
-    });
-
-// Add event listener to check all button
-document
-    .getElementById("checkAll")
-    .addEventListener("click", async () => {
-        checkAll();
-    });
-
-// Add event listener to uncheck all button
-document
-    .getElementById("uncheckAll")
-    .addEventListener("click", async () => {
-        uncheckAll();
-    });
-document
-    .getElementById("deleteAll")
-    .addEventListener("click", async () => {
-        deleteAll();
-    });
-document
-    .getElementById("deleteCompleted")
-    .addEventListener("click", async () => {
-        deleteCompleted();
-    });

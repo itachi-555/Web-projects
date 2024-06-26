@@ -1,44 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo List</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div class="mainContainer">
-      <h1>Todo List</h1>
-
-      <!-- Form to add a new todo -->
-      <form id="addTodoForm">
-        <input
-          type="text"
-          id="todoLabel"
-          placeholder="Enter todo label"
-          required
-        />
-        <button type="submit">Add Todo</button>
-      </form>
-
-      <!-- Container to display todos -->
-      <div id="todoContainer"></div>
-
-      <!-- Button container for check/uncheck all and delete all -->
-      <div class="button-container">
-        <!-- Button to check all todos -->
-        <button id="checkAll">Check All</button>
-
-        <!-- Button to uncheck all todos -->
-        <button id="uncheckAll">Uncheck All</button>
-
-        <!-- Button to delete all todos -->
-        <button id="deleteAll">Delete All</button>
-
-        <!-- Button to delete completed todos -->
-        <button id="deleteCompleted">Delete Completed</button>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Todo List</title>
+      <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+      <img src="images/bg-desktop-dark.jpg" />
+      <div class="container">
+        <div class="top-bar">
+          <h1 class="title">TODO</h1>
+          <button class="theme-button" id="theme-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+              <path
+                fill="#FFF"
+                fill-rule="evenodd"
+                d="M13 21a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-5.657-2.343a1 1 0 010 1.414l-2.121 2.121a1 1 0 01-1.414-1.414l2.12-2.121a1 1 0 011.415 0zm12.728 0l2.121 2.121a1 1 0 01-1.414 1.414l-2.121-2.12a1 1 0 011.414-1.415zM13 8a5 5 0 110 10 5 5 0 010-10zm12 4a1 1 0 110 2h-3a1 1 0 110-2h3zM4 12a1 1 0 110 2H1a1 1 0 110-2h3zm18.192-8.192a1 1 0 010 1.414l-2.12 2.121a1 1 0 01-1.415-1.414l2.121-2.121a1 1 0 011.414 0zm-16.97 0l2.121 2.12A1 1 0 015.93 7.344L3.808 5.222a1 1 0 011.414-1.414zM13 0a1 1 0 011 1v3a1 1 0 11-2 0V1a1 1 0 011-1z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="input-bar" id="input-bar">
+          <input type="checkbox" class="circle" id="todo-input-status" />
+          <input type="text" class="todo-input" id="todo-input-text" />
+        </div>
+        <div class="todos-container" id="todos-container">
+          <div class="todos" id="todos"></div>
+          <div class="menu" id="menu">
+            <p class="left" id="items">0 items left</p>
+            <div class="centered">
+              <button id="All" class="active">All</button>
+              <button id="Active" class="unactive">Active</button>
+              <button id="Completed" class="unactive">Completed</button>
+            </div>
+            <button id="Clear-completed" class="right">Clear Completed</button>
+          </div>
+        </div>
       </div>
-    </div>
-    <script src="script.js"></script>
-  </body>
-</html>
+      <script type="module" src="script.js"></script>
+      <script type="module" src="themes.js"></script>
+    </body>
+  </html>

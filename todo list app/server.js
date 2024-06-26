@@ -23,25 +23,26 @@ mongoose.connect("mongodb+srv://gameryounes555:Xl8o2cYvzbYUMoCL@cluster0.2xhvbdc
 
 // Handle adding Todo
 app.post('/todos', async (req, res) => {
+    console.log(req.body);
     const label = req.body.label;
-    const state = false;
+    const state = req.body.state;
     const newTodo = new Todo();
     newTodo.label = label;
     newTodo.state = state;
     await newTodo.save();
     console.log("Todo added");
-    res.status(200).json({ message: 'Todo added successfully' });
+    res.status(200).json({ message: 'Todo added successfully', id: newTodo._id });
 });
 
 // Handle updating Todo state
-app.patch('/todos/:todoId/state', async (req, res) => {
+app.put('/todos/:todoId/state', async (req, res) => {
     const todoId = req.params.todoId;
     try {
         const todo = await Todo.findById(todoId);
         if (todo) {
             todo.state = !todo.state;
             await todo.save();
-            res.status(200).json({ message: "Todo state updated successfully", todo: todo });
+            res.status(200).json({ message: "Todo state updated successfully", state: todo.state });
         } else {
             res.status(404).json({ message: `Todo with ID '${todoId}' not found` });
         }
@@ -51,28 +52,10 @@ app.patch('/todos/:todoId/state', async (req, res) => {
     }
 });
 
-// Handle updating Todo label
-app.patch('/todos/:todoId/label', async (req, res) => {
-    const todoId = req.params.todoId;
-    const newLabel = req.body.label;
-    try {
-        const todo = await Todo.findById(todoId);
-        if (todo) {
-            todo.label = newLabel;
-            await todo.save();
-            res.status(200).json({ message: "Todo label updated successfully", todo: todo });
-        } else {
-            res.status(404).json({ message: `Todo with ID '${todoId}' not found` });
-        }
-    } catch (error) {
-        console.error("Error updating Todo label:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
-
 // Handle deleting Todo
 app.delete('/todos/:todoId', async (req, res) => {
     const todoId = req.params.todoId;
+    console.log(todoId);
     try {
         const deletedTodo = await Todo.findByIdAndDelete(todoId);
         if (deletedTodo) {
@@ -95,44 +78,6 @@ app.get('/todos', async (req, res) => {
         res.status(200).json(todos);
     } catch (error) {
         console.error("Error fetching todos:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
-
-// Handle marking all todos as complete
-app.patch('/todos/mark-all-complete', async (req, res) => {
-    try {
-        await Todo.updateMany({}, { state: true });
-        res.status(200).json({ message: "All todos marked as complete" });
-    } catch (error) {
-        console.error("Error marking all todos as complete:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
-
-// Handle clearing all completed todos
-app.delete('/todos/clear-completed', async (req, res) => {
-    try {
-        await Todo.deleteMany({ state: true });
-        res.status(200).json({ message: "Completed todos cleared successfully" });
-    } catch (error) {
-        console.error("Error clearing completed todos:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
-
-// Handle fetching a single todo by ID
-app.get('/todos/:todoId', async (req, res) => {
-    const todoId = req.params.todoId;
-    try {
-        const todo = await Todo.findById(todoId);
-        if (todo) {
-            res.status(200).json(todo);
-        } else {
-            res.status(404).json({ message: `Todo with ID '${todoId}' not found` });
-        }
-    } catch (error) {
-        console.error("Error fetching todo by ID:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 });

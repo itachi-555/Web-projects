@@ -1,82 +1,188 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+* {
+  box-sizing: border-box;
+  font-family: "Josefin Sans";
+  transition: 300ms;
 }
-.mainContainer {
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: hsl(235, 21%, 11%);
+  position: relative;
+  padding-top: 10vh;
+}
+
+body img {
+  width: 100%;
+  position: absolute;
+  top: 0; /* Aligns image to the top of the body */
+  left: 0; /* Aligns image to the left of the body */
+  z-index: -1; /* Ensures the image is behind the content */
+  height: 30vh;
+}
+
+.container {
+  position: relative; /* Ensures the container is positioned relative to the body */
+  z-index: 1; /* Higher z-index makes sure the container is above the image */
+  display: flex;
+  flex-direction: column; /* Ensures items inside .container stack vertically */
+  align-items: center; /* Centers items horizontally inside .container */
+  justify-content: center; /* Centers items vertically inside .container */
+  min-width: 375px;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%; /* Ensures .top-bar spans the entire width of .container */
+  padding: 20px; /* Adds padding around .top-bar */
+}
+
+.title {
+  color: white;
+  margin: 0; /* Resets margin for .title */
+  font-weight: 700;
+  letter-spacing: 15px;
+}
+.input-bar {
+  width: 100%;
+  background-color: hsl(235, 24%, 19%);
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.todo-input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: hsl(236, 33%, 92%);
+  caret-color: hsl(220, 98%, 61%);
+  height: 35px;
+  width: 100%;
+  font-size: x-large;
+}
+.circle {
+  width: 20px;
+  height: 20px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 1px solid hsl(233, 14%, 35%);
+  margin-right: 20px;
+  appearance: none; /* Removes default checkbox styling */
+  -webkit-appearance: none; /* For better compatibility with WebKit browsers */
+  outline: none; /* Removes focus outline */
+  cursor: pointer; /* Adds a pointer cursor on hover */
+  position: relative; /* Required for positioning the SVG icon */
+}
+
+.circle:checked {
+  background: linear-gradient(
+    to right,
+    hsl(192, 100%, 67%),
+    hsl(280, 87%, 65%)
+  );
+  border: none;
+}
+.circle:checked::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px; /* Adjust the size of the icon to match the SVG */
+  height: 9px; /* Adjust the size of the icon to match the SVG */
+  background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="11" height="9"><path fill="none" stroke="%23FFF" stroke-width="2" d="M1 4.304L3.696 7l6-6"/></svg>')
+    no-repeat center center;
+  background-size: contain; /* Ensures the SVG scales correctly */
+  transform: translate(-50%, -50%); /* Centers the icon */
+}
+.todos-container {
+  margin-top: 35px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-h1 {
-  margin-top: 20px;
-}
-
-form {
-  margin-bottom: 20px;
-}
-form input {
-  font-size: medium;
-  border-radius: 3px;
-}
-input[type="text"],
-textarea {
-  border: 1px solid #ccc;
-  outline: none;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
-#todoContainer {
-  width: 400px;
-  background-color: #B5D0FF;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.todo {
-  padding: 10px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #ddd;
-  margin-bottom: 2px;
-  background-color: #f4f4f4;
-}
-.todo div {
-  display: flex;
-  align-items: center;
-}
-.todo div p {
-  margin: 0;
-}
-.todo div input[type="checkbox"] {
-  margin-right: 10px;
-}
-.button-container {
-  display: flex;
-  justify-content: space-around;
   width: 100%;
-  margin-top: 30px;
+  border-radius: 5px;
+  padding: 10px 0;
+  background-color: hsl(235, 24%, 19%);
 }
-button {
-  cursor: pointer;
-  padding: 5px 10px;
+.todos {
+  display: flex;
+  flex-direction: column;
+  min-height: 30vh;
+  max-height: 35vh;
+  overflow-y: scroll;
+}
+.todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  border-bottom: 1px solid hsl(234, 11%, 52%);
+}
+.todo:hover .cross {
+  visibility: visible;
+}
+.todo > .left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.todo > .left p {
+  font-size: 20px;
+}
+.uncompleted {
+  color: hsl(236, 33%, 92%);
+}
+.completed {
+  color: hsl(233, 14%, 35%);
+  text-decoration: line-through;
+}
+.cross {
+  visibility: hidden;
+  background-color: transparent; /* Ensures the button background is transparent */
+  border: none; /* Removes the border */
+  cursor: pointer; /* Adds a pointer cursor on hover */
+  padding: 0; /* Removes default padding */
+  margin: 0 20px;
+  background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path fill=\'%23494C6B\' fill-rule="evenodd" d="M16.97 0l.708.707L9.546 8.84l8.132 8.132-.707.707-8.132-8.132-8.132 8.132L0 16.97l8.132-8.132L0 .707.707 0 8.84 8.132 16.971 0z"/></svg>')
+    no-repeat center center;
+  background-size: contain; /* Ensures the SVG scales correctly */
+  width: 18px; /* Adjust the size of the button to match the SVG */
+  height: 18px; /* Adjust the size of the button to match the SVG */
+}
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid hsl(234, 11%, 52%);
+  font-size: 14px;
+  padding: 0 15px;
+}
+.menu button {
   border: none;
-  border-radius: 3px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: transparent;
+  cursor: pointer;
 }
-button:hover {
-  background-color: #0056b3;
+.unactive,
+.right ,.left{
+  color: hsl(233, 14%, 35%);
 }
-button:active {
-  background-color: #004080;
+.unactive:hover,
+.right:hover {
+  color: white;
+  font-weight: 700;
+}
+.active {
+  color: hsl(220, 98%, 61%);
+}
+.theme-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
