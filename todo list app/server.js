@@ -81,6 +81,21 @@ app.get('/todos', async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
+// Handle fetching todo by id
+app.get('/todo/:id', async (req, res) => {
+    const todoId = req.params.id;
+    try {
+        const todo = await Todo.findById(todoId);
+        if (todo) {
+            res.status(200).json({ message: "Todo fetched successfully", state: todo.state });
+        } else {
+            res.status(404).json({ message: `Todo with ID '${todoId}' not found` });
+        }
+    } catch (error) {
+        console.error("Error finding Todo", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 // Website host
 app.get('/', (req, res) => {

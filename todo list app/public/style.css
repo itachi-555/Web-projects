@@ -2,7 +2,7 @@
 * {
   box-sizing: border-box;
   font-family: "Josefin Sans";
-  transition: 300ms;
+  transition: 0.1s;
 }
 body {
   margin: 0;

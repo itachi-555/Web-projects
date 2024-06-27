@@ -6,7 +6,6 @@ const ActiveButton = document.getElementById('Active');
 const CompletedButton = document.getElementById('Completed');
 let items = 0;
 import { currentTheme, changeTheme } from './themes.js';
-console.log(currentTheme);
 //API functions
 function fetchTodos() {
     fetch('/todos')
@@ -96,13 +95,24 @@ async function updateFromServer(id) {
     }
 
 }
+async function fetchTodoById(todoId) {
+    try {
+        const response = await fetch(`/todo/${todoId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch todo');
+        }
+        const data = await response.json();
+        return data.state; // Return the JSON data received from the server
+    } catch (error) {
+        console.error('Error fetching todo:', error);
+        throw error; // Propagate the error further if needed
+    }
+}
+
 //js functions
 function updateItems() {
     const itemsLeft = document.getElementById('items');
     itemsLeft.innerText = `${items} items left`;
-}
-function updateTodStyle(id) {
-
 }
 // Function to add a new todo element
 async function addTodo(text, checkBoxValue, index) {
@@ -143,14 +153,11 @@ async function updateState(id) {
         text.className = 'uncompleted';
     }
     updateItems();
+    changeTheme(currentTheme);
 }
 async function deleteTodo(id) {
-    const response = await fetch(`/todos/${id}`); // Fetch updated todo data
-    if (!response.ok) {
-        throw new Error('Failed to fetch updated todo');
-    }
-    const element = await response.json();
-    if (!element.state) {
+    const todoState = await fetchTodoById(id);
+    if (!todoState) {
         items--;
         updateItems();
     }
@@ -161,7 +168,6 @@ async function deleteTodo(id) {
     } else {
         console.error('Element not found.');
     }
-
 }
 
 document.getElementById('Clear-completed').addEventListener('click', function () {
@@ -233,3 +239,6 @@ document.addEventListener('keydown', async function (event) {
     changeTheme(currentTheme);
 });
 fetchTodos();
+// Add this at the end of your script.js file
+window.deleteTodo = deleteTodo;
+window.updateState = updateState;
