@@ -5,7 +5,6 @@ const AllButton = document.getElementById('All');
 const ActiveButton = document.getElementById('Active');
 const CompletedButton = document.getElementById('Completed');
 let items = 0;
-import { currentTheme, changeTheme } from './themes.js';
 //API functions
 function fetchTodos() {
     fetch('/todos')
@@ -153,7 +152,6 @@ async function updateState(id) {
         text.className = 'uncompleted';
     }
     updateItems();
-    changeTheme(currentTheme);
 }
 async function deleteTodo(id) {
     const todoState = await fetchTodoById(id);
@@ -189,7 +187,6 @@ AllButton.addEventListener('click', function () {
     AllButton.className = 'active';
     ActiveButton.className = 'unactive';
     CompletedButton.className = 'unactive';
-    changeTheme(currentTheme);
 });
 
 ActiveButton.addEventListener('click', function () {
@@ -206,7 +203,6 @@ ActiveButton.addEventListener('click', function () {
     ActiveButton.className = 'active';
     AllButton.className = 'unactive';
     CompletedButton.className = 'unactive';
-    changeTheme(currentTheme);
 });
 
 CompletedButton.addEventListener('click', function () {
@@ -223,7 +219,6 @@ CompletedButton.addEventListener('click', function () {
     CompletedButton.className = 'active';
     AllButton.className = 'unactive';
     ActiveButton.className = 'unactive';
-    changeTheme(currentTheme);
 });
 
 
@@ -236,9 +231,5 @@ document.addEventListener('keydown', async function (event) {
         await addTodo(todoText, todoStatus, index); // Add new todo asynchronousl
         todoInputText.value = '';
     }
-    changeTheme(currentTheme);
 });
 fetchTodos();
-// Add this at the end of your script.js file
-window.deleteTodo = deleteTodo;
-window.updateState = updateState;

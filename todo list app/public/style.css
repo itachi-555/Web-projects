@@ -1,3 +1,12 @@
+:root {
+  --backgroundColor: hsl(235, 21%, 11%);
+--containerColor: hsl(235, 24%, 19%);
+--textColor: hsl(234, 39%, 85%);
+--buttonsHoverColor: hsl(236, 33%, 92%);
+--bordersColor: hsl(234, 11%, 52%);
+--buttonsColor: hsl(233, 14%, 35%);
+--completedColor: hsl(237, 14%, 26%);
+}
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 * {
   box-sizing: border-box;
@@ -10,11 +19,20 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  background-color: hsl(235, 21%, 11%);
+  background-color: var(--backgroundColor);
   position: relative;
   padding-top: 10vh;
 }
 
+.white-mode {
+  --backgroundColor: hsl(236, 33%, 92%);
+  --containerColor: hsl(0, 0%, 98%);
+  --textColor: black;
+  --buttonsHoverColor: black;
+  --bordersColor: hsl(233, 11%, 84%);
+  --buttonsColor: hsl(236, 9%, 61%);
+  --completedColor: hsl(235, 19%, 35%);
+}
 body img {
   width: 100%;
   position: absolute;
@@ -50,7 +68,7 @@ body img {
 }
 .input-bar {
   width: 100%;
-  background-color: hsl(235, 24%, 19%);
+  background-color: var(--containerColor);
   padding: 10px 20px;
   border-radius: 5px;
   display: flex;
@@ -61,7 +79,7 @@ body img {
   border: none;
   outline: none;
   background-color: transparent;
-  color: hsl(236, 33%, 92%);
+  color: var(--textColor);
   caret-color: hsl(220, 98%, 61%);
   height: 35px;
   width: 100%;
@@ -72,7 +90,7 @@ body img {
   height: 20px;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border: 1px solid hsl(233, 14%, 35%);
+  border: 1px solid var(--bordersColor);
   margin-right: 20px;
   appearance: none; /* Removes default checkbox styling */
   -webkit-appearance: none; /* For better compatibility with WebKit browsers */
@@ -109,7 +127,7 @@ body img {
   width: 100%;
   border-radius: 5px;
   padding: 10px 0;
-  background-color: hsl(235, 24%, 19%);
+  background-color: var(--containerColor);
 }
 .todos {
   display: flex;
@@ -123,7 +141,7 @@ body img {
   align-items: center;
   justify-content: space-between;
   background-color: transparent;
-  border-bottom: 1px solid hsl(234, 11%, 52%);
+  border-bottom: 1px solid var(--bordersColor);
 }
 .todo:hover .cross {
   visibility: visible;
@@ -137,10 +155,10 @@ body img {
   font-size: 20px;
 }
 .uncompleted {
-  color: hsl(236, 33%, 92%);
+  color: var(--textColor);
 }
 .completed {
-  color: hsl(233, 14%, 35%);
+  color: var(--completedColor);
   text-decoration: line-through;
 }
 .cross {
@@ -160,7 +178,7 @@ body img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid hsl(234, 11%, 52%);
+  border-top: 1px solid var(--bordersColor);
   font-size: 14px;
   padding: 0 15px;
 }
@@ -170,12 +188,13 @@ body img {
   cursor: pointer;
 }
 .unactive,
-.right ,.left{
-  color: hsl(233, 14%, 35%);
+.right,
+.left {
+  color: var(--buttonsColor);
 }
 .unactive:hover,
 .right:hover {
-  color: white;
+  color: var(--buttonsHoverColor);
   font-weight: 700;
 }
 .active {
